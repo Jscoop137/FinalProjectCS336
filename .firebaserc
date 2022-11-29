@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "cs336-finalproj1": {
+      "hosting": {
+        "cs336-FinalApp1": [
+          "cs336-finalproj1"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "cs336-finalproj1"
+  }
+}
