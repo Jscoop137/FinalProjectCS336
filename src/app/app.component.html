@@ -58,7 +58,7 @@
     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div class="RightSide">
-        <div class="buildingBase">
+        <!--<div class="buildingBase">
             <div class="buildingBackground1">
                 <span class="TotalP1"> Total:
                     <span style="font-weight: bold; font-size: 130%;">{{clickerPower}}</span>
@@ -69,7 +69,8 @@
                     <br> Cost:{{CPowerCost}}</button>
                 <img class="BuildingImageMain" src="assets/img/ArrowImg.png">
             </div>
-        </div>
+        </div>-->
+        <app-building [TotalScore]="TotalScore" (Output)="updateData($event)"></app-building>
 
         <div class="buildingBase">
             <div class="buildingBackground1">
@@ -118,12 +119,12 @@
                 <span class="TotalP1"> Total:
                     <span style="font-weight: bold; font-size: 130%;">{{Lworkshops}}</span>
                 </span>
-                <div class="BuildingLabel">Large Workshop</div>
+                <div class="BuildingLabel">Factory</div>
                 <button class="BuildButton1" (click)="clickBuilding3()">
                     <span style="font-weight: bold; font-size: 115%; padding: .5%;">Purchase!</span>
                     <br> Cost:{{LworkshopCost}}
                 </button>
-                <img class="BuildingImageMain" src="assets/img/LargeWorkshopImg.png">
+                <img class="BuildingImageMain" src="assets/img/Factory.png">
             </div>
         </div>
 

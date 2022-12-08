@@ -12,11 +12,13 @@ import { provideStorage, getStorage } from '@angular/fire/storage';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BuildingComponent } from './building/building.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    BuildingComponent
   ],
   imports: [
     BrowserModule,

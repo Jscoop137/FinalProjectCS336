@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import setRandomInterval from 'set-random-interval';
+import { BuildingComponent } from './building/building.component'; 
+import { data } from './building/building.component';
 
 @Component({
   selector: 'app-root',
@@ -13,14 +15,16 @@ export class AppComponent {
   }
   title = 'cs336-FinalApp1';
 
-  @Input('TotalScore') TotalScore: number = 0;
+  TotalScore: number = 0;
   clickTotalString: string = "";
   multNumb: number = 1;
 
   RedActive: boolean = false;
 
-  CPowerCost: number = 15;
-  CPowerCostPre: number = 15;
+  //CPowerCost: number = 15;
+  //CPowerCostPre: number = 15;
+
+  //get value from building component
   clickerPower: number = 1;
 
   EmployeeCost: number = 100;
@@ -68,13 +72,17 @@ export class AppComponent {
     this.TotalScore += (this.clickerPower * this.clickPowerModifier);
   }
 
-  ClickerUp1 = () => {
+  /*ClickerUp1 = () => {
     if (this.TotalScore >= this.CPowerCost) {
       this.TotalScore -= this.CPowerCost;
       this.clickerPower += 1;
       this.CPowerCost = Math.round(this.CPowerCostPre *= 1.3);
     }
+  }*/
 
+  updateData = (buildData: data) => {
+    this.clickerPower = buildData.clickerPowerOutput;
+    this.TotalScore = buildData.TotalScoreOutput;
   }
 
 
