@@ -14,9 +14,19 @@ export class BuildingComponent implements OnInit {
 
   constructor() { }
 
+  //Gets building name from parent
+  @Input() buildingType!: string; 
   
+  //Gets building image from parent
+  @Input() buildingName!: string;
 
-  //Gets score from parent
+  //Gets building cost from parent
+  @Input() buildingCost!: number;
+
+  //Gets building image from parent
+  @Input() buildingIMG!: string;
+
+  //Gets total score from parent
   @Input() TotalScore!: number;
 
   CPowerCost: number = 15;
@@ -35,10 +45,10 @@ export class BuildingComponent implements OnInit {
       this.clickerPower += 1;
       this.CPowerCost = Math.round(this.CPowerCostPre *= 1.3);
 
-      const temp = <data>{};
-      temp.TotalScoreOutput = this.TotalScore;
-      temp.clickerPowerOutput = this.clickerPower;
-      this.Output.emit(temp);
+      const newData = <data>{};
+      newData.TotalScoreOutput = this.TotalScore;
+      newData.clickerPowerOutput = this.clickerPower;
+      this.Output.emit(newData);
     }
   }
 

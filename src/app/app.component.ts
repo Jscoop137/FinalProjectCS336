@@ -80,9 +80,9 @@ export class AppComponent {
     }
   }*/
 
-  updateData = (buildData: data) => {
-    this.clickerPower = buildData.clickerPowerOutput;
-    this.TotalScore = buildData.TotalScoreOutput;
+  updateClickerData = (newData: data) => {
+    this.clickerPower = newData.clickerPowerOutput;
+    this.TotalScore = newData.TotalScoreOutput;
   }
 
 
