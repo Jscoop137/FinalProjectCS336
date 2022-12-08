@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import setRandomInterval from 'set-random-interval';
-import { BuildingComponent } from './building/building.component'; 
+import { BuildingComponent } from './building/building.component';
 import { data } from './building/building.component';
 
 @Component({
@@ -15,7 +15,16 @@ export class AppComponent {
   }
   title = 'cs336-FinalApp1';
 
+  //SCORE UNITS
+
   TotalScore: number = 0;
+  unitSymbols = ["", "k", "M", "G", "T", "P", "E"];
+  displayScore = "0";
+
+  //Gizmos / second calc
+  increaseRate = 0;
+  displayIncrease = "";
+
   clickTotalString: string = "";
   multNumb: number = 1;
 
@@ -45,7 +54,6 @@ export class AppComponent {
   clickPower2Xactive: string = 'F';
   clickPower2xCost: number = 30000;
 
-
   EmployeeProdModifier: number = 2;
   EmployeeProd5xactive = 'F';
   EmployeeProd5xCost: number = 75000;
@@ -62,10 +70,24 @@ export class AppComponent {
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
 
+  calcWithSuffix = (num : number) => {
+    let tier = Math.floor(Math.log10(num) / 3) | 0;
+    if (tier === 0) {
+      return num.toString();
+    } else {
+      let suffix = this.unitSymbols[tier];
+      let scale = Math.pow(10, tier * 3);
+      let scaled = num / scale;
+      return scaled.toFixed(3) + " " + suffix;
+    }
+  }
+
+
   numberCall = () => {
     this.clickTotalString = String(this.TotalScore);
     localStorage.setItem('clickNum', this.clickTotalString);
-    this.TotalScore += Math.round((this.EmployeeProdModifier * this.employees) + (this.SworkshopProdModifier * this.Sworkshops) + (this.LworkshopProdModifier * this.Lworkshops));
+    this.increaseRate = Math.round((this.EmployeeProdModifier * this.employees) + (this.SworkshopProdModifier * this.Sworkshops) + (this.LworkshopProdModifier * this.Lworkshops));
+    this.TotalScore += this.increaseRate;
   }
 
   clickAdd = () => {
@@ -174,7 +196,10 @@ export class AppComponent {
     this.numberCall();
     setInterval(() => {
       this.numberCall();
+      this.displayScore = this.calcWithSuffix(this.TotalScore);
+      this.displayIncrease = this.calcWithSuffix(this.increaseRate);
     }, 100);
+    
 
     setRandomInterval(() => this.TurnOnRed(), 10000, 50000);
   }
