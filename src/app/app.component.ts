@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import setRandomInterval from 'set-random-interval';
 import { BuildingComponent } from './building/building.component';
 import { data } from './building/building.component';
@@ -18,7 +18,7 @@ export class AppComponent {
   //SCORE UNITS
 
   TotalScore: number = 0;
-  unitSymbols = ["", "k", "M", "G", "T", "P", "E"];
+  unitSymbols = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
   displayScore = "0";
 
   //Gizmos / second calc
@@ -29,6 +29,10 @@ export class AppComponent {
   multNumb: number = 1;
 
   RedActive: boolean = false;
+
+  //Source of the pictures that clicking will cycle through
+  gizmoClick = ["../assets/img/CenterGear-1.png", "../assets/img/CenterGear-2.png", "../assets/img/CenterGear-3.png", "../assets/img/CenterGear-4.png"];
+  gearIndex = 0;
 
   //CPowerCost: number = 15;
   //CPowerCostPre: number = 15;
@@ -70,7 +74,7 @@ export class AppComponent {
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
 
-  calcWithSuffix = (num : number) => {
+  calcWithSuffix = (num: number) => {
     let tier = Math.floor(Math.log10(num) / 3) | 0;
     if (tier === 0) {
       return num.toString();
@@ -92,6 +96,8 @@ export class AppComponent {
 
   clickAdd = () => {
     this.TotalScore += (this.clickerPower * this.clickPowerModifier);
+    this.gearIndex = (this.gearIndex + 1) % 4;
+    console.log(this.gearIndex);
   }
 
   /*ClickerUp1 = () => {
@@ -199,7 +205,7 @@ export class AppComponent {
       this.displayScore = this.calcWithSuffix(this.TotalScore);
       this.displayIncrease = this.calcWithSuffix(this.increaseRate);
     }, 100);
-    
+
 
     setRandomInterval(() => this.TurnOnRed(), 10000, 50000);
   }

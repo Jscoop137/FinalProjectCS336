@@ -10,8 +10,8 @@
             <h3>Your Number: <span style="font-size: 120%;">{{displayScore}}</span></h3>
             <h4>Gizmos per Second: <span style="font-size: 100%;">{{displayIncrease}}</span></h4>
         </div>
-
-        <button class="MainClick" (click)="clickAdd()">Click here!</button>
+        
+        <img class="clicker" *ngFor="let gizmo of gizmoClick; index as i;" [src]="gizmo" (click)="clickAdd()" [hidden]="!(i === gearIndex)">
 
         <button class="RedButton" (click)="RedButtonClick()">Score Boost!</button>
 
