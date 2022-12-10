@@ -1,7 +1,16 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import setRandomInterval from 'set-random-interval';
-import { BuildingComponent } from './building/building.component'; 
+import { BuildingComponent } from './building/building.component';
 import { data } from './building/building.component';
+
+interface Building {
+  name: string,
+  desc?: string,
+  cost: number,
+  production: number,
+  quantity: number,
+  img: string,
+}
 
 @Component({
   selector: 'app-root',
@@ -15,103 +24,74 @@ export class AppComponent {
   }
   title = 'cs336-FinalApp1';
 
+  //SCORE UNITS
+
   TotalScore: number = 0;
+  unitSymbols = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
+  displayScore = "0";
+
+  //Gizmos / second calc
+  increaseRate = 0;
+  displayIncrease = "";
+
   clickTotalString: string = "";
   multNumb: number = 1;
 
   RedActive: boolean = false;
 
+  //Source of the pictures that clicking will cycle through
+  gizmoClick = ["../assets/img/CenterGear-1.png", "../assets/img/CenterGear-2.png", "../assets/img/CenterGear-3.png", "../assets/img/CenterGear-4.png"];
+  gearIndex = 0;
+
   //CPowerCost: number = 15;
   //CPowerCostPre: number = 15;
 
   //get value from building component
-  clickerPower: number = 1;
 
-  EmployeeCost: number = 100;
-  EmployeeCostPre: number = 100;
-  employees: number = 0;
+  buyBuilding = (building: Building) => {
+    if (this.TotalScore >= building.cost) {
+      this.TotalScore -= building.cost;
+      building.quantity += 1;
+      building.cost = Math.round(building.cost *= 1.3);
+    }
+  }
 
-  SworkshopCost: number = 1000
-  SworkshopCostPre: number = 1000;
-  Sworkshops: number = 0;
-
-  LworkshopCost: number = 100000;
-  LworkshopCostPre: number = 100000;
-  Lworkshops: number = 0;
-
-  ///////////////////Decs for Upgrades////////////////////////////////////////////////////////////////////////////////
-
-  clickPowerModifier: number = 1;
-  clickPower2Xactive: string = 'F';
-  clickPower2xCost: number = 30000;
-
-
-  EmployeeProdModifier: number = 2;
-  EmployeeProd5xactive = 'F';
-  EmployeeProd5xCost: number = 75000;
-
-  SworkshopProdModifier: number = 5;
-  SworkshopProd5xactive = 'F';
-  SworkshopProd5xCost: number = 150000;
-
-  LworkshopProdModifier: number = 30;
-  LworkshopProd5xactive = 'F';
-  LworkshopProd5xCost: number = 150000;
-
-
+  //Building Arrays
+  buildings: Building[] = [{name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png"},
+                           {name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png"},
+                           {name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png"},
+                           {name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png"},
+                           {name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png"}];
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
+
+  calcWithSuffix = (num: number) => {
+    let tier = Math.floor(Math.log10(num) / 3) | 0;
+    if (tier === 0) {
+      return num.toString();
+    } else {
+      let suffix = this.unitSymbols[tier];
+      let scale = Math.pow(10, tier * 3);
+      let scaled = num / scale;
+      return scaled.toFixed(3) + " " + suffix;
+    }
+  }
+
 
   numberCall = () => {
     this.clickTotalString = String(this.TotalScore);
     localStorage.setItem('clickNum', this.clickTotalString);
-    this.TotalScore += Math.round((this.EmployeeProdModifier * this.employees) + (this.SworkshopProdModifier * this.Sworkshops) + (this.LworkshopProdModifier * this.Lworkshops));
+    this.increaseRate = 0;
+    for(let i = 1; i < this.buildings.length; i++) {
+      this.increaseRate += this.buildings[i].production * this.buildings[i].quantity;
+    }
+    this.TotalScore += this.increaseRate;
   }
 
   clickAdd = () => {
-    this.TotalScore += (this.clickerPower * this.clickPowerModifier);
+    this.TotalScore += (this.buildings[0].quantity * this.buildings[0].production);
+    this.gearIndex = (this.gearIndex + 1) % 4;
   }
-
-  /*ClickerUp1 = () => {
-    if (this.TotalScore >= this.CPowerCost) {
-      this.TotalScore -= this.CPowerCost;
-      this.clickerPower += 1;
-      this.CPowerCost = Math.round(this.CPowerCostPre *= 1.3);
-    }
-  }*/
-
-  updateClickerData = (newData: data) => {
-    this.clickerPower = newData.clickerPowerOutput;
-    this.TotalScore = newData.TotalScoreOutput;
-  }
-
-
-  clickBuilding1 = () => {
-    if (this.TotalScore >= this.EmployeeCost) {
-      this.TotalScore -= this.EmployeeCost;
-      this.employees += 1;
-      this.EmployeeCost = Math.round(this.EmployeeCostPre *= 1.3);
-    }
-
-  }
-
-  clickBuilding2 = () => {
-    if (this.TotalScore >= this.SworkshopCost) {
-      this.TotalScore -= this.SworkshopCost;
-      this.Sworkshops += 1;
-      this.SworkshopCost = Math.round(this.SworkshopCostPre *= 1.3);
-    }
-
-  }
-
-  clickBuilding3 = () => {
-    if (this.TotalScore >= this.LworkshopCost) {
-      this.TotalScore -= this.LworkshopCost;
-      this.Lworkshops += 1;
-      this.LworkshopCost = Math.round(this.LworkshopCostPre *= 1.3);
-    }
-  }
-
 
   getRandomArbitrary = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -133,48 +113,16 @@ export class AppComponent {
 
   /////////////////////////////////Upgrades///////////////////////////////////////////////////////////////////////////////////
 
-  UpgradeClickPower2x = () => {
-    if (this.clickPower2Xactive == 'F' && this.TotalScore >= this.clickPower2xCost) {
-      this.clickPower2Xactive = 'T';
-      this.TotalScore -= this.clickPower2xCost;
-      this.clickPowerModifier += 9;
-    }
-  }
-
-
-  EmployeeProd5x = () => {
-    if (this.EmployeeProd5xactive == 'F' && this.TotalScore >= this.EmployeeProd5xCost) {
-      this.EmployeeProd5xactive = 'T';
-      this.TotalScore -= this.EmployeeProd5xCost;
-      this.clickPowerModifier *= 5;
-    }
-  }
-
-
-  SworkshopProd5x = () => {
-    if (this.SworkshopProd5xactive == 'F' && this.TotalScore >= this.SworkshopProd5xCost) {
-      this.SworkshopProd5xactive = 'T';
-      this.TotalScore -= this.SworkshopProd5xCost;
-      this.clickPowerModifier *= 5;
-    }
-  }
-
-
-  LworkshopProd5x = () => {
-    if (this.LworkshopProd5xactive == 'F' && this.TotalScore >= this.LworkshopProd5xCost) {
-      this.LworkshopProd5xactive = 'T';
-      this.TotalScore -= this.LworkshopProd5xCost;
-      this.clickPowerModifier *= 5;
-    }
-  }
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {
     this.numberCall();
     setInterval(() => {
       this.numberCall();
+      this.displayScore = this.calcWithSuffix(this.TotalScore);
+      this.displayIncrease = this.calcWithSuffix(this.increaseRate);
     }, 100);
+
 
     setRandomInterval(() => this.TurnOnRed(), 10000, 50000);
   }
