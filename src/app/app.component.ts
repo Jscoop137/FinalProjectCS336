@@ -12,6 +12,15 @@ interface Building {
   img: string,
 }
 
+interface Upgrade {
+  name: string,
+  desc?: string,
+  cost: number,
+  multiplier: number,
+  target: number,
+  purchased: boolean,
+}
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -43,25 +52,22 @@ export class AppComponent {
   gizmoClick = ["../assets/img/CenterGear-1.png", "../assets/img/CenterGear-2.png", "../assets/img/CenterGear-3.png", "../assets/img/CenterGear-4.png"];
   gearIndex = 0;
 
-  //CPowerCost: number = 15;
-  //CPowerCostPre: number = 15;
-
-  //get value from building component
-
-  buyBuilding = (building: Building) => {
-    if (this.TotalScore >= building.cost) {
-      this.TotalScore -= building.cost;
-      building.quantity += 1;
-      building.cost = Math.round(building.cost *= 1.3);
-    }
-  }
-
   //Building Arrays
-  buildings: Building[] = [{name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png"},
-                           {name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png"},
-                           {name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png"},
-                           {name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png"},
-                           {name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png"}];
+  buildings: Building[] = [
+  { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png" },
+  { name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png" },
+  { name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png" },
+  { name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png" },
+  { name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png" },
+  ];
+
+  upgrades: Upgrade[] = [
+  { name: "MegaClicker", cost: 10000, multiplier: 10, target: 0, purchased: false },
+  { name: "Overtime", cost: 50000, multiplier: 5, target: 1, purchased: false },
+  { name: "Coal Power", cost: 100000, multiplier: 5, target: 2, purchased: false },
+  { name: "Child Labor", cost: 300000, multiplier: 5, target: 3, purchased: false },
+  { name: "Tax Cuts", cost: 1000000, multiplier: 5, target: 4, purchased: false },
+  ];
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -77,12 +83,27 @@ export class AppComponent {
     }
   }
 
+  buyBuilding = (building: Building) => {
+    if (this.TotalScore >= building.cost) {
+      this.TotalScore -= building.cost;
+      building.quantity += 1;
+      building.cost = Math.round(building.cost *= 1.3);
+    }
+  }
+
+  buyUpgrade = (upgrade: Upgrade) => {
+    if (this.TotalScore >= upgrade.cost) {
+      this.TotalScore -= upgrade.cost;
+      upgrade.purchased = true;
+      this.buildings[upgrade.target].production *= upgrade.multiplier;
+    }
+  }
 
   numberCall = () => {
     this.clickTotalString = String(this.TotalScore);
     localStorage.setItem('clickNum', this.clickTotalString);
     this.increaseRate = 0;
-    for(let i = 1; i < this.buildings.length; i++) {
+    for (let i = 1; i < this.buildings.length; i++) {
       this.increaseRate += this.buildings[i].production * this.buildings[i].quantity;
     }
     this.TotalScore += this.increaseRate;
@@ -100,7 +121,7 @@ export class AppComponent {
 
   RedButtonClick = () => {
     if (this.RedActive === true) {
-      this.TotalScore += Math.round(this.TotalScore / 10);
+      this.TotalScore += Math.round(this.getRandomArbitrary(this.increaseRate * 60, this.increaseRate * 180));
       document.documentElement.style.setProperty('--RedButCol', 'White');
       this.RedActive = false;
     }
@@ -111,8 +132,6 @@ export class AppComponent {
     this.RedActive = true;
   }
 
-  /////////////////////////////////Upgrades///////////////////////////////////////////////////////////////////////////////////
-
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {
@@ -120,7 +139,7 @@ export class AppComponent {
     setInterval(() => {
       this.numberCall();
       this.displayScore = this.calcWithSuffix(this.TotalScore);
-      this.displayIncrease = this.calcWithSuffix(this.increaseRate);
+      this.displayIncrease = this.calcWithSuffix(this.increaseRate * 10);
     }, 100);
 
 
