@@ -13,12 +13,14 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BuildingComponent } from './building/building.component';
+import { UpgradeComponent } from './upgrade/upgrade.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    BuildingComponent
+    BuildingComponent,
+    UpgradeComponent
   ],
   imports: [
     BrowserModule,

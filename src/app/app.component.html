@@ -14,63 +14,13 @@
         <img class="clicker" *ngFor="let gizmo of gizmoClick; index as i;" [src]="gizmo" (click)="clickAdd()" [hidden]="!(i === gearIndex)">
 
         <button class="RedButton" (click)="RedButtonClick()">Score Boost!</button>
-
-        <!-- <div class="UpgradeMenu">
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="UpgradeClickPower2x()">Buy!</button>
-                <div class="UpgradeTitle">Click Power x10 <br>
-                    Cost: {{clickPower2xCost}}</div>
-            </div>
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="EmployeeProd5x()">Buy!</button>
-                <div class="UpgradeTitle">Employee Production x5 <br>
-                    Cost: {{EmployeeProd5xCost}}</div>
-            </div>
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="SworkshopProd5x()">Buy!</button>
-                <div class="UpgradeTitle">Small Workshop Production x5<br>
-                    Cost: {{SworkshopProd5xCost}}</div>
-            </div>
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="LworkshopProd5x()">Buy!</button>
-                <div class="UpgradeTitle">Large Workshop Production 5x<br>
-                    Cost: {{LworkshopProd5xCost}}</div>
-            </div>
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="LworkshopProd5x()">Buy!</button>
-                <div class="UpgradeTitle">Large Workshop Production 5x<br>
-                    Cost: {{LworkshopProd5xCost}}</div>
-            </div>
-
-            <div class="UpgradeBase">
-                <button class="UpgradeButton" (click)="LworkshopProd5x()">Buy!</button>
-                <div class="UpgradeTitle">Large Workshop Production 5x<br>
-                    Cost: {{LworkshopProd5xCost}}</div>
-            </div> -->
-        <!-- </div> -->
+        
+        <app-upgrade *ngFor="let upgrade of upgrades" [name]="upgrade.name" [cost]="upgrade.cost" (click)="buyUpgrade(upgrade)" [hidden]="upgrade.purchased"></app-upgrade>
     </div>
 
     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div class="RightSide">
-        <!--<div class="buildingBase">
-            <div class="buildingBackground1">
-                <span class="TotalP1"> Total:
-                    <span style="font-weight: bold; font-size: 130%;">{{clickerPower}}</span>
-                </span>
-                <div class="BuildingLabel">Click Power</div>
-                <button class="BuildButton1" (click)="ClickerUp1()">
-                    <span style="font-weight: bold; font-size: 115%; padding: .5%;">Purchase!</span>
-                    <br> Cost:{{CPowerCost}}</button>
-                <img class="BuildingImageMain" src="assets/img/ArrowImg.png">
-            </div>
-        </div>-->
         <app-building *ngFor="let building of buildings" [name]="building.name" [quantity]="building.quantity"[cost]="building.cost" [img]="building.img" (click)="buyBuilding(building)"></app-building>
-
     </div>
 </main>
