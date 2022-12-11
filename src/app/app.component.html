@@ -1,21 +1,29 @@
 <main class="OverAll">
-    <div class="header1">
-        <h1>(Auto Click)</h1>
+    <div class="header">
+        <h1 class="titleText">Gizmo Clicker</h1>
     </div>
 
-
+    
     <div class="LeftSide">
-
-        <div class="ScoreArea">
-            <h3>Your Number: <span style="font-size: 120%;">{{displayScore}}</span></h3>
-            <h4>Gizmos per Second: <span style="font-size: 100%;">{{displayIncrease}}</span></h4>
+        <div class="clickArea">
+            <img class="clicker" *ngFor="let gizmo of gizmoClick; index as i;" [src]="gizmo" (click)="clickAdd()" [hidden]="!(i === gearIndex)">
         </div>
-        
-        <img class="clicker" *ngFor="let gizmo of gizmoClick; index as i;" [src]="gizmo" (click)="clickAdd()" [hidden]="!(i === gearIndex)">
 
-        <button class="RedButton" (click)="RedButtonClick()">Score Boost!</button>
-        
-        <app-upgrade *ngFor="let upgrade of upgrades" [name]="upgrade.name" [cost]="upgrade.cost" (click)="buyUpgrade(upgrade)" [hidden]="upgrade.purchased"></app-upgrade>
+        <div class="container">
+            <div class="ScoreArea">
+                <h3>Your Number: <span style="font-size: 120%;">{{displayScore}}</span></h3>
+                <h4>Gizmos per Second: <span style="font-size: 100%;">{{displayIncrease}}</span></h4>
+            </div>
+
+            <button class="RedButton" (click)="RedButtonClick()">Score Boost!</button>
+        </div>
+
+        <div class="bottomLeft">
+            <div class="UpgradeMenu">
+                <app-upgrade *ngFor="let upgrade of upgrades" [name]="upgrade.name" [cost]="upgrade.cost" (click)="buyUpgrade(upgrade)" [hidden]="upgrade.purchased"></app-upgrade>
+            </div>
+            
+        </div>
     </div>
 
     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
@@ -23,4 +31,6 @@
     <div class="RightSide">
         <app-building *ngFor="let building of buildings" [name]="building.name" [quantity]="building.quantity"[cost]="building.cost" [img]="building.img" (click)="buyBuilding(building)"></app-building>
     </div>
+
+    
 </main>

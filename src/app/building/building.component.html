@@ -6,7 +6,7 @@
         <div class="BuildingLabel">{{ name }}</div>
         <button class="BuildButton1">
             <span style="font-weight: bold; font-size: 115%; padding: .5%;">Purchase!</span>
-            <br> Cost:{{ cost }}</button>
+            <br> Cost:{{ cost | number}}</button>
         <img class="BuildingImageMain" [src]="img">
     </div>
 </div>

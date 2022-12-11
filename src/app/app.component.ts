@@ -59,6 +59,9 @@ export class AppComponent {
   { name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png" },
   { name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png" },
   { name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png" },
+  { name: "Company Town", cost: 10000000, production: 500, quantity: 0, img: "../assets/img/CompanyTownImg.png" },
+  { name: "Business Tower", cost: 100000000, production: 10000, quantity: 0, img: "../assets/img/BusinessTowerImg.png" }
+  ,
   ];
 
   upgrades: Upgrade[] = [

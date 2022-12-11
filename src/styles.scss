@@ -9,33 +9,52 @@
 
 /////////////////////////////Center//////////////////////////////////////////////////////////////
 
-.header1 {
+.header {
   position: fixed;
   width: 100%;
   height: 14.3%;
   background-color: darkgray;
-  text-align: center;
   border: 2px solid #3d3b36;
+  
 }
+
+
 
 
 //////////////////////////////Left//////////////////////////////////////////////////////////////
 
 .LeftSide {
-  background-color: #161a1f;
+  margin-right: 30%;
   margin-left: 2%;
+  display: inline-block;
+}
+
+.container {
+  display:flex;
 }
 
 .ScoreArea {
   background-color: lightgray;
   border: 2px solid black;
   border-radius: 100px;
-  width: 28%;
+  width: 53%;
   height: 10%;
   top: 15.5%;
-  position: fixed;
   left: .5%;
   padding: 1%;
+  text-align: center;
+  display: block;
+  
+}
+
+.clickArea {
+  //background-color: yellow;
+  position:static;
+  margin-left: 10%;
+}
+
+.bottomLeft {
+  display: flex;
 }
 
 .MainClick {
@@ -65,15 +84,9 @@
 .RedButton {
   background-color: var(--RedButCol);
   font-weight: bolder;
-  width: 100px;
-  height: 100px;
-
-  position: fixed;
-  left: 23%;
-  bottom: 0%;
-
+  width:15%;
   margin: 1%; //prev2
-  border-radius: 100px;
+  border-radius: 10000px;
   //transition-duration: 0.1s;
 }
 
@@ -84,11 +97,11 @@
 
 .UpgradeMenu {
   background-color: rgb(105, 103, 103);
-  position: fixed;
+  position: relative;
   overflow-y: scroll;
-  //border: 4px solid black;
+  border: 4px solid black;
+  min-width: 27vw;
   width: 22%;
-  height: 31%;
   bottom: 0%;
   left: 0%;
 }
