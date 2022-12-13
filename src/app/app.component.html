@@ -26,6 +26,6 @@
     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div class="RightSide">
-        <app-building *ngFor="let building of buildings" [name]="building.name" [quantity]="building.quantity"[cost]="building.cost" [img]="building.img" (click)="buyBuilding(building)"></app-building>
+        <app-building *ngFor="let building of buildings" [name]="building.name" [quantity]="building.quantity"[cost]="building.cost" [img]="building.img" [desc]="building.desc" (click)="buyBuilding(building)"></app-building>
     </div>
 </main>

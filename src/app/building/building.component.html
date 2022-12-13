@@ -1,13 +1,21 @@
 <div class="buildingBase">
+    
     <div class="buildingBackground1">
         <span class="TotalP1"> Total:
+            
             <span class="TotalP1value">{{ quantity }}</span>
         </span>
-        <div class="BuildingLabel">{{ name }}</div>
+        
+        <div class="BuildingLabel">{{ name }}
+            <div class="description">{{desc}}</div>
+        </div>
+        
         <button class="BuildButton1">
             <span style="font-weight: bold; font-size: 1.25vmax; padding: .5%;">Purchase!</span>
             <br> Cost:{{ cost | number}}</button>
+        
         <img class="BuildingImageMain" [src]="img">
+        
     </div>
 </div>
 

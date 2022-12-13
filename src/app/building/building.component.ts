@@ -26,6 +26,9 @@ export class BuildingComponent implements OnInit {
   //Gets building image from parent
   @Input() img!: string;
 
+  //Gets building description from parent
+  @Input() desc!: string;
+
   //Use interface instead of two outputs, replace number type with interface type
   @Output() Output: EventEmitter<data> = new EventEmitter<data>();
 

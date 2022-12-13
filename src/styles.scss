@@ -163,14 +163,15 @@
   background-color: lightblue;
   font-weight: bold;
   text-align: center;
-  font-size: 1.25vmax;
+  font-size: 3vmin;
+  line-height: 90%;
   border: 2px solid black;
   border-radius: 100px;
 
   position: relative;
   width: 17%;
-  height: 15%;
-  left: -5%;
+  height: 25%;
+  left: 40%;
   top: -34%;
   padding: 1%;
 }
@@ -179,23 +180,23 @@
   display: block;
   background-color: lightblue;
   text-align: center;
-  font-size: 1.25vmax;
+  font-size: 2.5vmin;
   border: 2px solid black;
   border-radius: 100px;
 
   position: relative;
   height: 8%;
-  width: 10%;
-  left: 12%;
+  width: fit-content;
+  left: 0%;
   top: -12%;
   padding: 1%;
 }
 
 .TotalP1value {
   font-weight: bold; 
-  font-size: 1.75vmax;
+  font-size: 3vmin;
   margin-left: -5%;
-  line-height: 5%;
+  line-height: 10%;
 }
 
 
@@ -231,6 +232,15 @@
   left: -20%;
   top: -33%;
 
+}
+
+.description {
+  font-size: 4vmin;
+  line-height: 100%;
+  margin-top: 30%;
+  margin-left: -50%;
+  width: 200%;
+  font-weight: 50;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////

@@ -5,7 +5,7 @@ import { data } from './building/building.component';
 
 interface Building {
   name: string,
-  desc?: string,
+  desc: string,
   cost: number,
   production: number,
   quantity: number,
@@ -54,13 +54,13 @@ export class AppComponent {
 
   //Building Arrays
   buildings: Building[] = [
-  { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png" },
-  { name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png" },
-  { name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png" },
-  { name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png" },
-  { name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png" },
-  { name: "Company Town", cost: 10000000, production: 500, quantity: 0, img: "../assets/img/CompanyTownImg.png" },
-  { name: "Business Tower", cost: 100000000, production: 10000, quantity: 0, img: "../assets/img/BusinessTowerImg.png" }
+  { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png", desc: "Buy more to click harder"},
+  { name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
+  { name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
+  { name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines"},
+  { name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
+  { name: "Company Town", cost: 10000000, production: 500, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
+  { name: "Business Tower", cost: 100000000, production: 10000, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
   ,
   ];
 
