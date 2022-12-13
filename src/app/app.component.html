@@ -1,4 +1,4 @@
-<main class="OverAll">
+<main class="overall">
     <div class="header">
         <h1 class="titleText">Gizmo Clicker</h1>
     </div>
@@ -11,26 +11,21 @@
 
         <div class="container">
             <div class="ScoreArea">
-                <h3>Your Number: <span style="font-size: 120%;">{{displayScore}}</span></h3>
-                <h4>Gizmos per Second: <span style="font-size: 100%;">{{displayIncrease}}</span></h4>
+                <h3 class="clickAreaLargeText">Your Number: {{displayScore}} <br> Gizmos per Second: {{displayIncrease}}</h3>
             </div>
 
             <button class="RedButton" (click)="RedButtonClick()">Score Boost!</button>
         </div>
 
-        <div class="bottomLeft">
-            <div class="UpgradeMenu">
-                <app-upgrade *ngFor="let upgrade of upgrades" [name]="upgrade.name" [cost]="upgrade.cost" (click)="buyUpgrade(upgrade)" [hidden]="upgrade.purchased"></app-upgrade>
-            </div>
-            
+        <div class="UpgradeMenu">
+            <app-upgrade *ngFor="let upgrade of upgrades" [name]="upgrade.name" [cost]="upgrade.cost" (click)="buyUpgrade(upgrade)" [hidden]="upgrade.purchased"></app-upgrade>
         </div>
     </div>
+    
 
     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
 
     <div class="RightSide">
         <app-building *ngFor="let building of buildings" [name]="building.name" [quantity]="building.quantity"[cost]="building.cost" [img]="building.img" (click)="buyBuilding(building)"></app-building>
     </div>
-
-    
 </main>
