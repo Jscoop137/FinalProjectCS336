@@ -37,7 +37,7 @@ export class AppComponent {
 
   //SCORE UNITS
 
-  TotalScore: number = 0;
+  TotalScore: number = 100000000000;
   unitSymbols = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
   displayScore = "0";
 
@@ -57,12 +57,12 @@ export class AppComponent {
   //Building Array
   buildings: Building[] = [
   { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png", desc: "Buy more to click harder"},
-  { name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
-  { name: "Small Workshop", cost: 1000, production: 5, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
-  { name: "Large Workshop", cost: 10000, production: 30, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines"},
-  { name: "Factory", cost: 1000000, production: 100, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
-  { name: "Company Town", cost: 10000000, production: 500, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
-  { name: "Business Tower", cost: 100000000, production: 10000, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
+  { name: "Employee", cost: 100, production: 1, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
+  { name: "Small Workshop", cost: 1000, production: 12, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
+  { name: "Large Workshop", cost: 10000, production: 123, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines"},
+  { name: "Factory", cost: 1000000, production: 1234, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
+  { name: "Company Town", cost: 10000000, production: 12345, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
+  { name: "Business Tower", cost: 100000000, production: 123456, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
   ,
   ];
 
@@ -73,6 +73,8 @@ export class AppComponent {
   { name: "Coal Power", cost: 100000, multiplier: 5, target: 2, purchased: false },
   { name: "Child Labor", cost: 300000, multiplier: 5, target: 3, purchased: false },
   { name: "Tax Cuts", cost: 1000000, multiplier: 5, target: 4, purchased: false },
+  { name: "Mortgage Hike", cost: 60000000, multiplier: 5, target: 5, purchased: false},
+  { name: "Lobbying", cost: 900000000, multiplier: 5, target: 6, purchased: false},
   ];
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
