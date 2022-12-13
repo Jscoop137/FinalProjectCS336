@@ -3,6 +3,7 @@ import setRandomInterval from 'set-random-interval';
 import { BuildingComponent } from './building/building.component';
 import { data } from './building/building.component';
 
+//Creates interface for our building component
 interface Building {
   name: string,
   desc: string,
@@ -12,6 +13,7 @@ interface Building {
   img: string,
 }
 
+//Creates interface for our upgrade component
 interface Upgrade {
   name: string,
   desc?: string,
@@ -52,7 +54,7 @@ export class AppComponent {
   gizmoClick = ["../assets/img/CenterGear-1.png", "../assets/img/CenterGear-2.png", "../assets/img/CenterGear-3.png", "../assets/img/CenterGear-4.png"];
   gearIndex = 0;
 
-  //Building Arrays
+  //Building Array
   buildings: Building[] = [
   { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png", desc: "Buy more to click harder"},
   { name: "Employee", cost: 100, production: 2, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
@@ -64,6 +66,7 @@ export class AppComponent {
   ,
   ];
 
+  //Upgrade Array
   upgrades: Upgrade[] = [
   { name: "MegaClicker", cost: 10000, multiplier: 10, target: 0, purchased: false },
   { name: "Overtime", cost: 50000, multiplier: 5, target: 1, purchased: false },
