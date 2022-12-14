@@ -166,7 +166,7 @@ export class AppComponent {
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {
-    this.restoreProgress()
+    this.restoreProgress();
     this.numberCall();
     setInterval(() => {
       this.numberCall();
