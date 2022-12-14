@@ -37,7 +37,7 @@ export class AppComponent {
 
   //SCORE UNITS
 
-  TotalScore: number = 100000000000;
+  TotalScore: number = 0;
   unitSymbols = ["", "thousand", "million", "billion", "trillion", "quadrillion", "quintillion"];
   displayScore = "0";
 
@@ -60,9 +60,9 @@ export class AppComponent {
   { name: "Employee", cost: 100, production: 1, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
   { name: "Small Workshop", cost: 1000, production: 12, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
   { name: "Large Workshop", cost: 10000, production: 123, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines"},
-  { name: "Factory", cost: 1000000, production: 1234, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
-  { name: "Company Town", cost: 10000000, production: 12345, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
-  { name: "Business Tower", cost: 100000000, production: 123456, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
+  { name: "Factory", cost: 100000, production: 1234, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
+  { name: "Company Town", cost: 1000000, production: 12345, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
+  { name: "Business Tower", cost: 10000000, production: 123456, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
   ,
   ];
 
@@ -97,6 +97,9 @@ export class AppComponent {
       building.quantity += 1;
       building.cost = Math.round(building.cost *= 1.3);
     }
+    // Store in localStorage
+    localStorage.setItem(building.name, String(building.quantity));
+    localStorage.setItem(building.name + " cost", String(building.cost));
   }
 
   buyUpgrade = (upgrade: Upgrade) => {
@@ -105,11 +108,11 @@ export class AppComponent {
       upgrade.purchased = true;
       this.buildings[upgrade.target].production *= upgrade.multiplier;
     }
+    localStorage.setItem(upgrade.name, "true");
   }
 
   numberCall = () => {
-    this.clickTotalString = String(this.TotalScore);
-    localStorage.setItem('clickNum', this.clickTotalString);
+    localStorage.setItem('Total Score', String(this.TotalScore));
     this.increaseRate = 0;
     for (let i = 1; i < this.buildings.length; i++) {
       this.increaseRate += this.buildings[i].production * this.buildings[i].quantity;
@@ -128,7 +131,7 @@ export class AppComponent {
 
 
   RedButtonClick = () => {
-    if (this.RedActive === true) {
+    if (this.RedActive) {
       this.TotalScore += Math.round(this.getRandomArbitrary(this.increaseRate * 60, this.increaseRate * 180));
       document.documentElement.style.setProperty('--RedButCol', 'White');
       this.RedActive = false;
@@ -140,9 +143,25 @@ export class AppComponent {
     this.RedActive = true;
   }
 
+  restoreProgress = () => {
+    this.TotalScore = Number(localStorage.getItem('Total Score') || 0);
+    for(let i = 0; i < this.buildings.length; i++) {
+      this.buildings[i].quantity = Number(localStorage.getItem(this.buildings[i].name) || 0);
+      if(this.buildings[i].quantity > 0)
+        this.buildings[i].cost = Number(localStorage.getItem(this.buildings[i].name + " cost"));
+    }
+    for(let i = 0; i < this.upgrades.length; i++) {
+      if(localStorage.getItem(this.upgrades[i].name)) {
+        this.upgrades[i].purchased = true;
+        this.buildings[this.upgrades[i].target].production *= this.upgrades[i].multiplier;
+      }
+    }
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   ngOnInit() {
+    this.restoreProgress()
     this.numberCall();
     setInterval(() => {
       this.numberCall();
