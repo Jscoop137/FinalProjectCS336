@@ -44,8 +44,6 @@ export class AppComponent {
   //Gizmos / second calc
   increaseRate = 0;
   displayIncrease = "";
-
-  clickTotalString: string = "";
   multNumb: number = 1;
 
   RedActive: boolean = false;
@@ -56,25 +54,25 @@ export class AppComponent {
 
   //Building Array
   buildings: Building[] = [
-  { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png", desc: "Buy more to click harder"},
-  { name: "Employee", cost: 100, production: 1, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding"},
-  { name: "Small Workshop", cost: 1000, production: 12, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
-  { name: "Large Workshop", cost: 10000, production: 123, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines"},
-  { name: "Factory", cost: 100000, production: 1234, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process"},
-  { name: "Company Town", cost: 1000000, production: 12345, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production"},
-  { name: "Business Tower", cost: 10000000, production: 123456, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making"}
-  ,
+    { name: "Clicker", cost: 15, production: 1, quantity: 1, img: "../assets/img/ArrowImg.png", desc: "Buy more to click harder" },
+    { name: "Employee", cost: 100, production: 1, quantity: 0, img: "../assets/img/EmployeeImg.png", desc: "Hire more employees to do your bidding" },
+    { name: "Small Workshop", cost: 1000, production: 12, quantity: 0, img: "../assets/img/SmallWorkshopImg.png", desc: "Introduces the assembly line to your gizmo production" },
+    { name: "Large Workshop", cost: 10000, production: 123, quantity: 0, img: "../assets/img/LargeWorkshopImg.png", desc: "Make assembly lines for your assembly lines" },
+    { name: "Factory", cost: 100000, production: 1234, quantity: 0, img: "../assets/img/FactoryImg.png", desc: "Use vertical integration to fully control the gizmo manufacturing process" },
+    { name: "Company Town", cost: 1000000, production: 12345, quantity: 0, img: "../assets/img/CompanyTownImg.png", desc: "Employees live closer to work, increasing production" },
+    { name: "Business Tower", cost: 10000000, production: 123456, quantity: 0, img: "../assets/img/BusinessTowerImg.png", desc: "The Wall Street of gizmo making" }
+    ,
   ];
 
   //Upgrade Array
   upgrades: Upgrade[] = [
-  { name: "MegaClicker", cost: 10000, multiplier: 10, target: 0, purchased: false },
-  { name: "Overtime", cost: 50000, multiplier: 5, target: 1, purchased: false },
-  { name: "Coal Power", cost: 100000, multiplier: 5, target: 2, purchased: false },
-  { name: "Child Labor", cost: 300000, multiplier: 5, target: 3, purchased: false },
-  { name: "Tax Cuts", cost: 1000000, multiplier: 5, target: 4, purchased: false },
-  { name: "Mortgage Hike", cost: 60000000, multiplier: 5, target: 5, purchased: false},
-  { name: "Lobbying", cost: 900000000, multiplier: 5, target: 6, purchased: false},
+    { name: "MegaClicker", cost: 10000, multiplier: 10, target: 0, purchased: false },
+    { name: "Overtime", cost: 50000, multiplier: 5, target: 1, purchased: false },
+    { name: "Coal Power", cost: 100000, multiplier: 5, target: 2, purchased: false },
+    { name: "Child Labor", cost: 300000, multiplier: 5, target: 3, purchased: false },
+    { name: "Tax Cuts", cost: 1000000, multiplier: 5, target: 4, purchased: false },
+    { name: "Mortgage Hike", cost: 60000000, multiplier: 5, target: 5, purchased: false },
+    { name: "Lobbying", cost: 900000000, multiplier: 5, target: 6, purchased: false },
   ];
 
   /////////////////////FUNCTIONS///////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,10 +94,11 @@ export class AppComponent {
       this.TotalScore -= building.cost;
       building.quantity += 1;
       building.cost = Math.round(building.cost *= 1.3);
+      localStorage.setItem(building.name, String(building.quantity));
+      localStorage.setItem(building.name + " cost", String(building.cost));
     }
     // Store in localStorage
-    localStorage.setItem(building.name, String(building.quantity));
-    localStorage.setItem(building.name + " cost", String(building.cost));
+
   }
 
   buyUpgrade = (upgrade: Upgrade) => {
@@ -107,17 +106,19 @@ export class AppComponent {
       this.TotalScore -= upgrade.cost;
       upgrade.purchased = true;
       this.buildings[upgrade.target].production *= upgrade.multiplier;
+      localStorage.setItem(upgrade.name, "true");
     }
-    localStorage.setItem(upgrade.name, "true");
+
   }
 
   numberCall = () => {
-    localStorage.setItem('Total Score', String(this.TotalScore));
+
     this.increaseRate = 0;
     for (let i = 1; i < this.buildings.length; i++) {
       this.increaseRate += this.buildings[i].production * this.buildings[i].quantity;
     }
     this.TotalScore += this.increaseRate;
+    localStorage.setItem('Total Score', String(this.TotalScore));
   }
 
   clickAdd = () => {
@@ -145,13 +146,17 @@ export class AppComponent {
 
   restoreProgress = () => {
     this.TotalScore = Number(localStorage.getItem('Total Score') || 0);
-    for(let i = 0; i < this.buildings.length; i++) {
-      this.buildings[i].quantity = Number(localStorage.getItem(this.buildings[i].name) || 0);
-      if(this.buildings[i].quantity > 0)
-        this.buildings[i].cost = Number(localStorage.getItem(this.buildings[i].name + " cost"));
+    //Get 1 clicker
+    for (let i = 0; i < this.buildings.length; i++) {
+      //Restores quantity of buildings
+      this.buildings[i].quantity = Number(localStorage.getItem(this.buildings[i].name) || this.buildings[i].quantity);
+      //Restores cost of buildings
+      if (this.buildings[i].quantity > 0)
+        this.buildings[i].cost = Number(localStorage.getItem(this.buildings[i].name + " cost") || this.buildings[i].cost);
     }
-    for(let i = 0; i < this.upgrades.length; i++) {
-      if(localStorage.getItem(this.upgrades[i].name)) {
+    for (let i = 0; i < this.upgrades.length; i++) {
+      //Restores purchased upgrades
+      if (localStorage.getItem(this.upgrades[i].name)) {
         this.upgrades[i].purchased = true;
         this.buildings[this.upgrades[i].target].production *= this.upgrades[i].multiplier;
       }
